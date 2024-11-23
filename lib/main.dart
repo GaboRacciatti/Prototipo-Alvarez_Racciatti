@@ -33,6 +33,12 @@ class _MyAppState extends State<MyApp> {
         '/perfil': (context) => PerfilScreen(
               toggleTheme: toggleTheme,
               isDarkTheme: isDarkTheme,
+              registro: {
+                'nombre': 'Juan Pérez',
+                'email': 'juan.perez@empresa.com',
+                'ubicacion': 'Buenos Aires, Argentina',
+                'avatar': 'https://ui-avatars.com/api/?name=Juan+Pérez&background=random', // Avatar generado
+      },
             ),
         '/listado': (context) => ListaRegistroScreen(),
       },

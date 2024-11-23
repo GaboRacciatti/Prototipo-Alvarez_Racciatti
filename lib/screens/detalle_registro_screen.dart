@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 
-class DetalleRegistroScreen extends StatelessWidget {
+class DetalleRegistroScreen extends StatefulWidget {
   final Map<String, dynamic> registro;
 
   const DetalleRegistroScreen({Key? key, required this.registro}) : super(key: key);
+
+  @override
+  _DetalleRegistroScreenState createState() => _DetalleRegistroScreenState();
+}
+
+class _DetalleRegistroScreenState extends State<DetalleRegistroScreen> {
+  final TextEditingController _comentarioController = TextEditingController();
+  bool _enActividad = false;
 
   @override
   Widget build(BuildContext context) {
@@ -19,23 +27,75 @@ class DetalleRegistroScreen extends StatelessWidget {
             Center(
               child: CircleAvatar(
                 radius: 50,
-                backgroundImage: NetworkImage(registro['avatar']),
+                backgroundImage: NetworkImage(widget.registro['avatar']),
               ),
             ),
             SizedBox(height: 16),
             Text(
-              'Nombre: ${registro['nombre']}',
+              'Nombre: ${widget.registro['nombre']}',
               style: TextStyle(fontSize: 18),
             ),
             SizedBox(height: 8),
             Text(
-              'Puesto: ${registro['puesto']}',
+              'Puesto: ${widget.registro['puesto']}',
               style: TextStyle(fontSize: 18),
             ),
             SizedBox(height: 8),
             Text(
-              'Sexo: ${registro['sexo']}',
+              'Sexo: ${widget.registro['sexo']}',
               style: TextStyle(fontSize: 18),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Comentario sobre su desempeño:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            TextFormField(
+              controller: _comentarioController,
+              maxLines: 4,
+              decoration: InputDecoration(
+                hintText: 'Escribe un comentario sobre su desempeño...',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 16),
+            Row(
+              children: [
+                Text(
+                  '¿Está en actividad?',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Checkbox(
+                  value: _enActividad,
+                  onChanged: (bool? value) {
+                    if (mounted) {
+                      setState(() {
+                        _enActividad = value ?? false;
+                      });
+                    }
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                if (mounted) {
+                  // Imprimir el comentario y el estado de la actividad
+                  print('Comentario: ${_comentarioController.text}');
+                  print('Está en actividad: $_enActividad');
+
+                  // Mostrar una alerta (SnackBar) indicando que la información fue guardada
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Información guardada'),
+                      duration: Duration(seconds: 2), // Duración de la alerta
+                      behavior: SnackBarBehavior.floating, // Estilo flotante
+                    ),
+                  );
+                }
+              },
+              child: Text('Guardar Información'),
             ),
           ],
         ),

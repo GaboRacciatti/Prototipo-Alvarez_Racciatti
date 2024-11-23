@@ -7,7 +7,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text('G.A. DEVELOPS'),
       ),
       drawer: Drawer(
         child: ListView(
