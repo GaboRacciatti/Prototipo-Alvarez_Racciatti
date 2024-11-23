@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/home_screen.dart';
-import 'screens/perfil_screen.dart';
-import 'screens/lista_registros_screen.dart';
-import 'screens/detalle_registro_screen.dart';
+import 'screens/screens.dart';
 import 'theme/app_theme.dart';
 
 void main() {
@@ -15,7 +12,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool isDarkTheme = false; // Tema inicial
+  bool isDarkTheme = false; 
 
   void toggleTheme() {
     setState(() {
@@ -33,9 +30,20 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/',
       routes: {
         '/': (context) => HomeScreen(),
-        '/perfil': (context) => PerfilScreen(toggleTheme: toggleTheme, isDarkTheme: isDarkTheme),
-        '/listado': (context) => ListaRegistrosScreen(),
-        '/detalle': (context) => DetalleRegistroScreen(),
+        '/perfil': (context) => PerfilScreen(
+              toggleTheme: toggleTheme,
+              isDarkTheme: isDarkTheme,
+            ),
+        '/listado': (context) => ListaRegistroScreen(),
+      },
+      onGenerateRoute: (settings) {
+        if (settings.name == '/detalle') {
+          final registro = settings.arguments as Map<String, dynamic>;
+          return MaterialPageRoute(
+            builder: (context) => DetalleRegistroScreen(registro: registro),
+          );
+        }
+        return null; 
       },
     );
   }
