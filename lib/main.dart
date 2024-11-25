@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
                 'nombre': 'Juan Pérez',
                 'email': 'juan.perez@empresa.com',
                 'ubicacion': 'Buenos Aires, Argentina',
-                'avatar': 'https://ui-avatars.com/api/?name=Juan+Pérez&background=random', // Avatar generado
+                'avatar': 'https://ui-avatars.com/api/?name=Juan+Pérez&background=random',
       },
             ),
         '/listado': (context) => ListaRegistroScreen(),

@@ -63,11 +63,21 @@ class HomeScreen extends StatelessWidget {
               height: 350,
             ),
             SizedBox(height: 20),
-            Text(
-              'G.A. SOFTWARE DEVELOPERS',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+            ShaderMask(
+              blendMode: BlendMode.srcIn,
+              shaderCallback: (bounds) {
+                return LinearGradient(
+                  colors: [Colors.blue, Colors.purple, Colors.red],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ).createShader(bounds);
+              },
+              child: Text(
+                'G.A. SOFTWARE DEVELOPERS',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             SizedBox(height: 10),

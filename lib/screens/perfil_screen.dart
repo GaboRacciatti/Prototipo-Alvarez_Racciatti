@@ -65,21 +65,20 @@ class PerfilScreen extends StatelessWidget {
 
             ElevatedButton.icon(
               onPressed: () {
-                // Mostrar un SnackBar simulando la edición del perfil
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Perfil editado'),
-                    duration: Duration(seconds: 2), // Duración del SnackBar
-                    behavior: SnackBarBehavior.floating, // Opcional: estilo flotante
+                    duration: Duration(seconds: 2),
+                    behavior: SnackBarBehavior.floating, 
                   ),
                 );
               },
               icon: Icon(Icons.edit),
               label: Text('Editar Perfil'),
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white, // Color del texto y el ícono
-                backgroundColor: Color(0xFF6200EA), // Violeta oscuro
-                minimumSize: Size(double.infinity, 40), // Tamaño mínimo
+                foregroundColor: Colors.white, 
+                backgroundColor: Color(0xFF6200EA),
+                minimumSize: Size(double.infinity, 40), 
               ),
             ),
             SizedBox(height: 20),

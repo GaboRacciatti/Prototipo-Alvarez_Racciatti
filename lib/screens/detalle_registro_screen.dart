@@ -81,16 +81,14 @@ class _DetalleRegistroScreenState extends State<DetalleRegistroScreen> {
             ElevatedButton(
               onPressed: () {
                 if (mounted) {
-                  // Imprimir el comentario y el estado de la actividad
                   print('Comentario: ${_comentarioController.text}');
                   print('Está en actividad: $_enActividad');
 
-                  // Mostrar una alerta (SnackBar) indicando que la información fue guardada
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Información guardada'),
-                      duration: Duration(seconds: 2), // Duración de la alerta
-                      behavior: SnackBarBehavior.floating, // Estilo flotante
+                      duration: Duration(seconds: 2), 
+                      behavior: SnackBarBehavior.floating,
                     ),
                   );
                 }
