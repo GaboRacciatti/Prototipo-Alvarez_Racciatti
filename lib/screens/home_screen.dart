@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue, 
+                color: Colors.blue,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
                   Icon(
                     Icons.business,
                     size: 80,
-                    color: Colors.white, 
+                    color: Colors.white,
                   ),
                   SizedBox(height: 10),
                   Text(
@@ -44,10 +44,17 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: Icon(Icons.list), 
+              leading: Icon(Icons.list),
               title: Text('Lista de Empleados (Racciatti)'),
               onTap: () {
                 Navigator.pushNamed(context, '/listado');
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.assignment_turned_in), // Ícono representativo
+              title: Text('Trabajos Realizados'), // Nueva opción en el menú
+              onTap: () {
+                Navigator.pushNamed(context, '/trabajos_realizados'); // Navega a la pantalla de Trabajos Realizados
               },
             ),
           ],
@@ -85,7 +92,7 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
                 'Bienvenido al sistema de gestión de nuestra empresa. '
-                'Aquí podrás consultar el listado de empleados, jefes de área y más.',
+                'Aquí podrás consultar el listado de empleados, trabajos realizados y más.',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16),
               ),

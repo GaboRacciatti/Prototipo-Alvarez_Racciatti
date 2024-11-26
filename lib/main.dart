@@ -8,14 +8,14 @@ void main() {
 
 class MyApp extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  _MyAppState createState() => _MyAppState(); 
 }
 
 class _MyAppState extends State<MyApp> {
   bool isDarkTheme = false; 
 
   void toggleTheme() {
-    setState(() {
+    setState(() { //verificamos el estado actual del tema
       isDarkTheme = !isDarkTheme;
     });
   }
@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
         '/perfil': (context) => PerfilScreen(
               toggleTheme: toggleTheme,
               isDarkTheme: isDarkTheme,
-              registro: {
+              registro: { //agregamos un usuario manualmente para probar el perfil
                 'nombre': 'Juan Pérez',
                 'email': 'juan.perez@empresa.com',
                 'ubicacion': 'Buenos Aires, Argentina',
@@ -41,6 +41,7 @@ class _MyAppState extends State<MyApp> {
       },
             ),
         '/listado': (context) => ListaRegistroScreen(),
+        '/trabajos_realizados': (context) => ListaTrabajosScreen(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/detalle') {

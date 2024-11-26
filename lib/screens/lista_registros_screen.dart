@@ -20,7 +20,7 @@ class _ListaRegistroScreenState extends State<ListaRegistroScreen> {
   Future<void> obtenerRegistros() async {
     try {
       final response = await http.get(
-        Uri.parse('https://66f2ca6e71c84d805876bcdb.mockapi.io/api/v1/Empleado'),
+        Uri.parse('https://66f2ca6e71c84d805876bcdb.mockapi.io/api/v1/Empleado'), //En este link manejamos registros de la API
       );
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -44,7 +44,7 @@ class _ListaRegistroScreenState extends State<ListaRegistroScreen> {
   }
 
   String generarAvatar(String nombre) {
-    return 'https://ui-avatars.com/api/?name=${Uri.encodeComponent(nombre)}&background=random';
+    return 'https://ui-avatars.com/api/?name=${Uri.encodeComponent(nombre)}&background=random'; //generamos un avatar aleatorio para cada empleado usando la API de UI Avatars
   }
 
   @override
