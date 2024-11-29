@@ -63,7 +63,7 @@ class _DetalleRegistroScreenState extends State<DetalleRegistroScreen> {
               style: TextStyle(color: textColor),
               decoration: InputDecoration(
                 hintText: 'Escribe un comentario sobre su desempeño...',
-                hintStyle: TextStyle(color: placeholderColor), // Placeholder neutral
+                hintStyle: TextStyle(color: placeholderColor), 
                 border: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: textColor.withOpacity(0.5),
