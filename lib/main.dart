@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'screens/screens.dart';
 import 'theme/app_theme.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'helpers/preferences.dart'; 
+import 'helpers/preferences.dart';
+import 'service/ServicePerfil.dart'; 
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); 
+  WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
   await Preferences.initShared();
   runApp(MyApp());
@@ -13,44 +14,31 @@ void main() async {
 
 class MyApp extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState(); 
+  _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  bool isDarkTheme = Preferences.darkmode; 
+  bool isDarkTheme = Preferences.darkmode;
   Map<String, dynamic> registro = {};
 
   @override
   void initState() {
     super.initState();
-    cargarPerfil(); 
+    inicializarPerfil();
   }
 
-  void toggleTheme() {
-    setState(() {
-      isDarkTheme = !isDarkTheme;
-      Preferences.darkmode = isDarkTheme; 
-    });
-  }
-
-  Future<void> guardarPerfil(Map<String, dynamic> perfil) async {
-    Preferences.nombre = perfil['nombre'];
-    Preferences.email = perfil['email'];
-    Preferences.ubicacion = perfil['ubicacion'];
+  void inicializarPerfil() async {
+    final perfil = await ServicePerfil.cargarPerfil();
     setState(() {
       registro = perfil;
     });
   }
 
-  Future<void> cargarPerfil() async {
-      setState(() {
-        registro = {
-          'nombre': Preferences.nombre,
-          'email': Preferences.email,
-          'ubicacion': Preferences.ubicacion,
-          'avatar': 'https://ui-avatars.com/api/?name=${Uri.encodeComponent(Preferences.nombre)}&background=random',
-        };
-      });
+  void toggleTheme() {
+    setState(() {
+      isDarkTheme = !isDarkTheme;
+      Preferences.darkmode = isDarkTheme;
+    });
   }
 
   @override

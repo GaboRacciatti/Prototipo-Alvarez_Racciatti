@@ -23,7 +23,7 @@ class _ListaRegistroScreenState extends State<ListaRegistroScreen> {
     try {
       final apiUrl = dotenv.env['URL_API_GABO']; 
       if (apiUrl == null) {
-        throw Exception('URL_API_GABO no está definida en el archivo .env');
+        throw Exception('La url no se encontró');
       }
 
       final response = await http.get(Uri.parse(apiUrl));

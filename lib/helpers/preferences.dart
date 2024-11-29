@@ -2,10 +2,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Preferences {
   static bool _darkmode = false;
-  static String _apellido = '';
-  static String _nombre = '';
-  static String _email = '';
-  static String _ubicacion = '';
+  static String _apellido = 'Perez';
+  static String _nombre = 'Juan';
+  static String _email = 'JuanPerez@gmail.com';
+  static String _ubicacion = 'Bahia Blanca';
   static late SharedPreferences _prefs;
 
   static Future<void> initShared() async {
