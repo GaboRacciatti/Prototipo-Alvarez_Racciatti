@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'screens.dart';
 import '/widgets/widgets.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
 
 class ListaTrabajosScreen extends StatefulWidget {
   @override
@@ -20,9 +21,11 @@ class _ListaTrabajosScreenState extends State<ListaTrabajosScreen> {
 
   Future<void> obtenerTrabajos() async {
     try {
-      final response = await http.get(
-        Uri.parse('https://66d9de7f4ad2f6b8ed564dbf.mockapi.io/Trabajos_Realizados'),
-      );
+      final apiUrl = dotenv.env['URL_API_ALVAREZ']; 
+      if (apiUrl == null) {
+        throw Exception('La url no se encontró');
+      }
+      final response = await http.get(Uri.parse(apiUrl));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         setState(() {
