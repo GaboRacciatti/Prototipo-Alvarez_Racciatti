@@ -1,8 +1,9 @@
 # Prototipo de Gestión Empresarial
 ## Descripción
-Esta aplicación es un prototipo de gestión empresarial desarrollado en Flutter. Permite administrar empleados, visualizar sus perfiles, editar información básica y gestionar las configuraciones del sistema, como el tema (claro/oscuro).
+Esta aplicación es un prototipo de gestión empresarial desarrollado en Flutter. Permite administrar empleados, trabajos, visualizar sus perfiles, editar información básica y gestionar las configuraciones del sistema, como el tema (claro/oscuro).
 ## Características principales
 * Listado de empleados: Visualiza la lista completa de empleados con sus roles y estados.
+* Listado de trabajos: Visualiza una lista de trabajos finalizados
 * Perfil de usuario: Muestra información detallada del perfil, con la posibilidad de editar datos básicos.
 * Tema dinámico: Permite cambiar entre tema claro y oscuro mediante un interruptor.
 * Interfaz intuitiva: Diseño moderno y fácil de usar, adaptado a diferentes dispositivos.
@@ -31,9 +32,20 @@ Pantalla personalizada que incluye:
   * Información del usuario (nombre, email, ubicación).
   * Opción para cambiar entre tema claro y oscuro.
   * Botón de edición con confirmación.
-##Servicios
+5. Lista de Trabajos Realizados
+Incluye: 
+ * Icon segun puesto
+ * Informacion del trabajo (Nombre empleado, Puesto empleado, Descripcion trabajo)
+6. Detalle de trabajos realizados:
+Incluye:
+ *Informacion: Descripcion, empleado a cargo, puesto
+ * TextInput para comentario
+ * Swith para marcar si esta finalizado
+## Servicios
 * API Mock: Se conecta a un endpoint ficticio para simular datos reales.
-* Endpoint utilizado: https://66f2ca6e71c84d805876bcdb.mockapi.io/api/v1/Empleado
+### Endpoints utilizados:
+* https://66f2ca6e71c84d805876bcdb.mockapi.io/api/v1/Empleado
+* https://66d9de7f4ad2f6b8ed564dbf.mockapi.io/Trabajos_Realizados
 
 ## Cómo ejecutar la aplicación
 * Instalación de dependencias: Asegúrate de tener Flutter instalado y luego ejecuta:
