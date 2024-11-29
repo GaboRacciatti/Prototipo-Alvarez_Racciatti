@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'detalle_registro_screen.dart';
 import 'dart:convert';
+import '/widgets/widgets.dart';
 
 class ListaRegistroScreen extends StatefulWidget {
   @override
@@ -20,7 +21,7 @@ class _ListaRegistroScreenState extends State<ListaRegistroScreen> {
   Future<void> obtenerRegistros() async {
     try {
       final response = await http.get(
-        Uri.parse('https://66f2ca6e71c84d805876bcdb.mockapi.io/api/v1/Empleado'), //En este link manejamos registros de la API
+        Uri.parse('https://66f2ca6e71c84d805876bcdb.mockapi.io/api/v1/Empleado'),
       );
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -30,7 +31,6 @@ class _ListaRegistroScreenState extends State<ListaRegistroScreen> {
               'id': registro['id'],
               'nombre': registro['nombre'],
               'puesto': registro['puesto'],
-              'sexo': registro['sexo'],
               'avatar': generarAvatar(registro['nombre']),
             };
           }).toList();
@@ -44,7 +44,7 @@ class _ListaRegistroScreenState extends State<ListaRegistroScreen> {
   }
 
   String generarAvatar(String nombre) {
-    return 'https://ui-avatars.com/api/?name=${Uri.encodeComponent(nombre)}&background=random'; //generamos un avatar aleatorio para cada empleado usando la API de UI Avatars
+    return 'https://ui-avatars.com/api/?name=${Uri.encodeComponent(nombre)}&background=random';
   }
 
   @override
@@ -59,17 +59,18 @@ class _ListaRegistroScreenState extends State<ListaRegistroScreen> {
               itemCount: registros.length,
               itemBuilder: (context, index) {
                 final registro = registros[index];
-                return ListTile(
+                return CustomListItem(
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(registro['avatar']),
                   ),
-                  title: Text(registro['nombre']),
-                  subtitle: Text(registro['puesto']),
+                  title: registro['nombre'],
+                  subtitle: registro['puesto'],
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => DetalleRegistroScreen(registro: registro),
+                        builder: (context) =>
+                            DetalleRegistroScreen(registro: registro),
                       ),
                     );
                   },

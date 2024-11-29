@@ -1,19 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class PerfilScreen extends StatelessWidget {
-  final VoidCallback toggleTheme;
-  final bool isDarkTheme; 
+  final VoidCallback toggleTheme; // Callback para cambiar el tema
+  final bool isDarkTheme; // Estado del tema actual
+  final Map<String, dynamic> registro; // Información del perfil
 
-  final Map<String, dynamic> registro;
+  PerfilScreen({
+    required this.toggleTheme,
+    required this.isDarkTheme,
+    required this.registro,
+  });
 
-  PerfilScreen({required this.toggleTheme, required this.isDarkTheme, required this.registro});
-
+  // Generar un avatar dinámico a partir del nombre
   String generarAvatar(String nombre) {
     return 'https://ui-avatars.com/api/?name=${Uri.encodeComponent(nombre)}&background=random';
   }
 
+  // Guardar el perfil actualizado en SharedPreferences
+  Future<void> guardarPerfil(Map<String, dynamic> perfil) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('perfil', jsonEncode(perfil)); // Guardar como JSON
+  }
+
   @override
   Widget build(BuildContext context) {
+    TextEditingController nombreController = TextEditingController(text: registro['nombre']);
+    TextEditingController emailController = TextEditingController(text: registro['email']);
+    TextEditingController ubicacionController = TextEditingController(text: registro['ubicacion']);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Perfil'),
@@ -56,33 +72,40 @@ class PerfilScreen extends StatelessWidget {
                 Switch(
                   value: isDarkTheme,
                   onChanged: (value) {
-                    toggleTheme(); 
+                    toggleTheme();
                   },
                 ),
               ],
             ),
             SizedBox(height: 20),
 
+            // Botón para editar el perfil
             ElevatedButton.icon(
-              onPressed: () {
+              onPressed: () async {
+                final nuevoPerfil = {
+                  'nombre': nombreController.text,
+                  'email': emailController.text,
+                  'ubicacion': ubicacionController.text,
+                  'avatar': registro['avatar'],
+                };
+                await guardarPerfil(nuevoPerfil);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Perfil editado'),
                     duration: Duration(seconds: 2),
-                    behavior: SnackBarBehavior.floating, 
+                    behavior: SnackBarBehavior.floating,
                   ),
                 );
               },
               icon: Icon(Icons.edit),
               label: Text('Editar Perfil'),
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white, 
+                foregroundColor: Colors.white,
                 backgroundColor: Color(0xFF6200EA),
-                minimumSize: Size(double.infinity, 40), 
+                minimumSize: Size(double.infinity, 40),
               ),
             ),
             SizedBox(height: 20),
-
           ],
         ),
       ),
