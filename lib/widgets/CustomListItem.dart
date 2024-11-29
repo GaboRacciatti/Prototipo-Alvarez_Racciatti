@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CustomListItem extends StatelessWidget {
-  final Widget leading; // Ícono o Avatar
-  final String title; // Título principal
-  final String subtitle; // Subtítulo
-  final Widget? trailing; // Elemento adicional al final
-  final VoidCallback onTap; // Acción al presionar el elemento
-  final Color backgroundColor; // Color del fondo de la tarjeta
+  final Widget leading;
+  final String title; 
+  final String subtitle; 
+  final Widget? trailing; 
+  final VoidCallback onTap; 
+  final Color backgroundColor; 
 
   const CustomListItem({
     Key? key,
@@ -15,7 +15,7 @@ class CustomListItem extends StatelessWidget {
     required this.subtitle,
     this.trailing,
     required this.onTap,
-    this.backgroundColor = Colors.white, // Color predeterminado
+    this.backgroundColor = Colors.white,
   }) : super(key: key);
 
   @override
