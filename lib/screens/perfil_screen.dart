@@ -5,23 +5,21 @@ import 'dart:convert';
 class PerfilScreen extends StatelessWidget {
   final VoidCallback toggleTheme; // Callback para cambiar el tema
   final bool isDarkTheme; // Estado del tema actual
-  final Map<String, dynamic> registro; // Información del perfil
-
+  final Map<String, dynamic> registro; 
   PerfilScreen({
     required this.toggleTheme,
     required this.isDarkTheme,
     required this.registro,
   });
 
-  // Generar un avatar dinámico a partir del nombre
   String generarAvatar(String nombre) {
     return 'https://ui-avatars.com/api/?name=${Uri.encodeComponent(nombre)}&background=random';
   }
 
-  // Guardar el perfil actualizado en SharedPreferences
   Future<void> guardarPerfil(Map<String, dynamic> perfil) async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString('perfil', jsonEncode(perfil)); // Guardar como JSON
+    prefs.setString('perfil', jsonEncode(perfil));
+    print('Perfil guardado: ${perfil['nombre']}');
   }
 
   @override
@@ -72,23 +70,24 @@ class PerfilScreen extends StatelessWidget {
                 Switch(
                   value: isDarkTheme,
                   onChanged: (value) {
-                    toggleTheme();
+                    toggleTheme(); 
                   },
                 ),
               ],
             ),
             SizedBox(height: 20),
 
-            // Botón para editar el perfil
             ElevatedButton.icon(
               onPressed: () async {
                 final nuevoPerfil = {
                   'nombre': nombreController.text,
                   'email': emailController.text,
                   'ubicacion': ubicacionController.text,
-                  'avatar': registro['avatar'],
+                  'avatar': registro['avatar'], 
                 };
+
                 await guardarPerfil(nuevoPerfil);
+
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Perfil editado'),

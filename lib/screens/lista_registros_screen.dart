@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'detalle_registro_screen.dart';
 import 'dart:convert';
 import '/widgets/widgets.dart';
@@ -20,9 +21,12 @@ class _ListaRegistroScreenState extends State<ListaRegistroScreen> {
 
   Future<void> obtenerRegistros() async {
     try {
-      final response = await http.get(
-        Uri.parse('https://66f2ca6e71c84d805876bcdb.mockapi.io/api/v1/Empleado'),
-      );
+      final apiUrl = dotenv.env['URL_API_GABO']; 
+      if (apiUrl == null) {
+        throw Exception('URL_API_GABO no está definida en el archivo .env');
+      }
+
+      final response = await http.get(Uri.parse(apiUrl));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         setState(() {
