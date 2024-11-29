@@ -24,28 +24,28 @@ class CustomListItem extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
       elevation: 4,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12), // Bordes más redondeados
+        borderRadius: BorderRadius.circular(12), 
       ),
       color: backgroundColor,
       child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16), // Más espacio interno
+        contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16), 
         leading: CircleAvatar(
-          backgroundColor: Colors.grey[200], // Fondo claro para el ícono
+          backgroundColor: Colors.grey[200], 
           child: leading,
         ),
         title: Text(
           title,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 18.0, // Tamaño de texto más grande
-            color: Colors.black87, // Color oscuro para mejor contraste
+            fontSize: 18.0, 
+            color: Colors.black87, 
           ),
         ),
         subtitle: Text(
           subtitle,
           style: TextStyle(
-            color: Colors.grey[800], // Subtítulo ligeramente más oscuro
-            fontSize: 14.0, // Ajuste de tamaño
+            color: Colors.grey[800], 
+            fontSize: 14.0, 
           ),
         ),
         trailing: trailing,
