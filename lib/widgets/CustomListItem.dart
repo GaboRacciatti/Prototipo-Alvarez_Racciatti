@@ -34,11 +34,12 @@ class CustomListItem extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16.0,
+            color: Colors.black
           ),
         ),
         subtitle: Text(
           subtitle,
-          style: TextStyle(color: Colors.grey[700]),
+          style: TextStyle(color: const Color.fromARGB(255, 26, 25, 25)),
         ),
         trailing: trailing,
         onTap: onTap,
