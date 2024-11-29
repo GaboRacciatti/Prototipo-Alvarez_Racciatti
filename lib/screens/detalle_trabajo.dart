@@ -30,7 +30,7 @@ class _DetalleTrabajoScreenState extends State<DetalleTrabajoScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Mostrar datos básicos del trabajo
+              
               _buildSectionTitle('Descripción del Trabajo'),
               _buildInfoBox(widget.trabajo['descripcion_trabajo'] ?? 'No especificado'),
 
@@ -53,7 +53,7 @@ class _DetalleTrabajoScreenState extends State<DetalleTrabajoScreen> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  fillColor: Colors.grey[100], // Fondo claro para mayor visibilidad
+                  fillColor: Colors.grey[100], 
                   filled: true,
                 ),
                 style: TextStyle(fontSize: 16, color: Colors.blueGrey[900]),
@@ -89,11 +89,11 @@ class _DetalleTrabajoScreenState extends State<DetalleTrabajoScreen> {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    // Imprimir comentario y estado del trabajo
+                    
                     print('Comentario: ${_comentarioController.text}');
                     print('Trabajo completado: $_trabajoCompletado');
 
-                    // Mostrar una alerta (SnackBar) indicando que la información fue guardada
+                   
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
@@ -126,7 +126,7 @@ class _DetalleTrabajoScreenState extends State<DetalleTrabajoScreen> {
     );
   }
 
-  // Método para construir títulos de secciones
+
   Widget _buildSectionTitle(String title) {
     return Text(
       title,
@@ -138,7 +138,7 @@ class _DetalleTrabajoScreenState extends State<DetalleTrabajoScreen> {
     );
   }
 
-  // Método para mostrar información en un cuadro estilizado
+  
   Widget _buildInfoBox(String text) {
     return Container(
       padding: EdgeInsets.all(12),
@@ -151,7 +151,7 @@ class _DetalleTrabajoScreenState extends State<DetalleTrabajoScreen> {
             color: Colors.blueGrey.withOpacity(0.2),
             spreadRadius: 2,
             blurRadius: 4,
-            offset: Offset(0, 2), // Sombra hacia abajo
+            offset: Offset(0, 2), 
           ),
         ],
       ),
