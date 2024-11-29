@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 
 class PerfilScreen extends StatelessWidget {
-  final VoidCallback toggleTheme; // Callback para cambiar el tema
-  final bool isDarkTheme; // Estado del tema actual
-  final Map<String, dynamic> registro; // Información del perfil
+  final VoidCallback toggleTheme;
+  final bool isDarkTheme; 
+  final Map<String, dynamic> registro; 
 
   PerfilScreen({
     required this.toggleTheme,
@@ -13,23 +11,8 @@ class PerfilScreen extends StatelessWidget {
     required this.registro,
   });
 
-  // Generar un avatar dinámico a partir del nombre
-  String generarAvatar(String nombre) {
-    return 'https://ui-avatars.com/api/?name=${Uri.encodeComponent(nombre)}&background=random';
-  }
-
-  // Guardar el perfil actualizado en SharedPreferences
-  Future<void> guardarPerfil(Map<String, dynamic> perfil) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('perfil', jsonEncode(perfil)); // Guardar como JSON
-  }
-
   @override
   Widget build(BuildContext context) {
-    TextEditingController nombreController = TextEditingController(text: registro['nombre']);
-    TextEditingController emailController = TextEditingController(text: registro['email']);
-    TextEditingController ubicacionController = TextEditingController(text: registro['ubicacion']);
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Perfil'),
@@ -42,13 +25,13 @@ class PerfilScreen extends StatelessWidget {
             Center(
               child: CircleAvatar(
                 radius: 60,
-                backgroundImage: NetworkImage(generarAvatar(registro['nombre'])),
+                backgroundImage: NetworkImage(registro['avatar']),
               ),
             ),
             SizedBox(height: 20),
 
             Text(
-              '¡Hola de nuevo! ${registro['nombre']}',
+              '¡Hola de nuevo ${registro['nombre']} ${registro['apellido']}!',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
@@ -79,16 +62,8 @@ class PerfilScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
 
-            // Botón para editar el perfil
             ElevatedButton.icon(
               onPressed: () async {
-                final nuevoPerfil = {
-                  'nombre': nombreController.text,
-                  'email': emailController.text,
-                  'ubicacion': ubicacionController.text,
-                  'avatar': registro['avatar'],
-                };
-                await guardarPerfil(nuevoPerfil);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Perfil editado'),
