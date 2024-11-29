@@ -49,7 +49,7 @@ class _DetalleRegistroScreenState extends State<DetalleRegistroScreen> {
             ),
             SizedBox(height: 8),
             Text(
-              'Sexo: ${widget.registro['sexo'] ?? 'No especificado'}',
+              'Sexo: ${widget.registro['sexo']}',
               style: TextStyle(fontSize: 18, color: textColor),
             ),
             SizedBox(height: 16),

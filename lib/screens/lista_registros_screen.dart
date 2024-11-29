@@ -35,6 +35,7 @@ class _ListaRegistroScreenState extends State<ListaRegistroScreen> {
               'id': registro['id'],
               'nombre': registro['nombre'],
               'puesto': registro['puesto'],
+              'sexo': registro['sexo'],
               'avatar': generarAvatar(registro['nombre']),
             };
           }).toList();
