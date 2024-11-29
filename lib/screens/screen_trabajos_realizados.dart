@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'screens.dart';
+import '/widgets/widgets.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
 
 class ListaTrabajosScreen extends StatefulWidget {
   @override
@@ -19,9 +21,11 @@ class _ListaTrabajosScreenState extends State<ListaTrabajosScreen> {
 
   Future<void> obtenerTrabajos() async {
     try {
-      final response = await http.get(
-        Uri.parse('https://66d9de7f4ad2f6b8ed564dbf.mockapi.io/Trabajos_Realizados'), // Link de la API
-      );
+      final apiUrl = dotenv.env['URL_API_ALVAREZ']; 
+      if (apiUrl == null) {
+        throw Exception('La url no se encontró');
+      }
+      final response = await http.get(Uri.parse(apiUrl));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         setState(() {
@@ -31,7 +35,7 @@ class _ListaTrabajosScreenState extends State<ListaTrabajosScreen> {
               'nombre_empleado': trabajo['nombre_empleado'],
               'descripcion_trabajo': trabajo['descripcion_trabajo'],
               'puesto': trabajo['puesto'],
-              'icono': generarIcono(trabajo['puesto']), // Ícono dinámico según el puesto
+              'icono': generarIcono(trabajo['puesto']),
             };
           }).toList();
         });
@@ -68,59 +72,30 @@ class _ListaTrabajosScreenState extends State<ListaTrabajosScreen> {
       body: trabajos.isEmpty
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(
-              padding: EdgeInsets.all(8.0),
               itemCount: trabajos.length,
               itemBuilder: (context, index) {
                 final trabajo = trabajos[index];
-                return Card(
-                  margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                return CustomListItem( // widget reutilizable por los dos integrantes
+                  leading: trabajo['icono'],
+                  title: trabajo['descripcion_trabajo'],
+                  subtitle: 'Empleado: ${trabajo['nombre_empleado']}',
+                  trailing: Text(
+                    trabajo['puesto'],
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.blueGrey[800],
+                    ),
                   ),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.green[100],
-                      child: trabajo['icono'],
-                    ),
-                    title: Text(
-                      trabajo['descripcion_trabajo'],
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            DetalleTrabajoScreen(trabajo: trabajo),
                       ),
-                    ),
-                    subtitle: Text(
-                      'Empleado: ${trabajo['nombre_empleado']}',
-                      style: TextStyle(color: Colors.grey[700]),
-                    ),
-                    trailing: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      decoration: BoxDecoration(
-                        color: Colors.blueGrey[100],
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Text(
-                        trabajo['puesto'],
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.blueGrey[800],
-                        ),
-                      ),
-                    ),
-                    onTap: () {
-                      // Navegar a la pantalla de detalles del trabajo
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DetalleTrabajoScreen(
-                            trabajo: trabajo,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                    );
+                  },
                 );
               },
             ),

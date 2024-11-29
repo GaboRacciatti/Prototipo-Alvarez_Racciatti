@@ -17,7 +17,10 @@ class _DetalleTrabajoScreenState extends State<DetalleTrabajoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detalle del Trabajo'),
+        title: Text(
+          'Detalle del Trabajo',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
         backgroundColor: Colors.blueGrey,
         elevation: 4,
       ),
@@ -27,7 +30,7 @@ class _DetalleTrabajoScreenState extends State<DetalleTrabajoScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Mostrar datos básicos del trabajo
+              
               _buildSectionTitle('Descripción del Trabajo'),
               _buildInfoBox(widget.trabajo['descripcion_trabajo'] ?? 'No especificado'),
 
@@ -46,13 +49,14 @@ class _DetalleTrabajoScreenState extends State<DetalleTrabajoScreen> {
                 maxLines: 3,
                 decoration: InputDecoration(
                   hintText: 'Escribe un comentario sobre este trabajo...',
+                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: 14),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  fillColor: Colors.grey[200],
+                  fillColor: Colors.grey[100], 
                   filled: true,
                 ),
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(fontSize: 16, color: Colors.blueGrey[900]),
               ),
 
               SizedBox(height: 16),
@@ -75,6 +79,8 @@ class _DetalleTrabajoScreenState extends State<DetalleTrabajoScreen> {
                       });
                     },
                     activeColor: Colors.green,
+                    inactiveThumbColor: Colors.grey[400],
+                    inactiveTrackColor: Colors.grey[300],
                   ),
                 ],
               ),
@@ -83,14 +89,17 @@ class _DetalleTrabajoScreenState extends State<DetalleTrabajoScreen> {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    // Imprimir comentario y estado del trabajo
+                    
                     print('Comentario: ${_comentarioController.text}');
                     print('Trabajo completado: $_trabajoCompletado');
 
-                    // Mostrar una alerta (SnackBar) indicando que la información fue guardada
+                   
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('Información del trabajo guardada'),
+                        content: Text(
+                          'Información del trabajo guardada',
+                          style: TextStyle(color: Colors.white),
+                        ),
                         duration: Duration(seconds: 2),
                         behavior: SnackBarBehavior.floating,
                         backgroundColor: Colors.green,
@@ -106,7 +115,7 @@ class _DetalleTrabajoScreenState extends State<DetalleTrabajoScreen> {
                   ),
                   child: Text(
                     'Guardar Información',
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),
               ),
@@ -117,30 +126,42 @@ class _DetalleTrabajoScreenState extends State<DetalleTrabajoScreen> {
     );
   }
 
-  // Método para construir títulos de secciones
+
   Widget _buildSectionTitle(String title) {
     return Text(
       title,
       style: TextStyle(
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: FontWeight.bold,
         color: Colors.blueGrey[800],
       ),
     );
   }
 
-  // Método para mostrar información en un cuadro estilizado
+  
   Widget _buildInfoBox(String text) {
     return Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.blueGrey[50],
+        color: Colors.white,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.blueGrey[200]!),
+        border: Border.all(color: Colors.blueGrey[300]!),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.blueGrey.withOpacity(0.2),
+            spreadRadius: 2,
+            blurRadius: 4,
+            offset: Offset(0, 2), 
+          ),
+        ],
       ),
       child: Text(
         text,
-        style: TextStyle(fontSize: 16, color: Colors.blueGrey[900]),
+        style: TextStyle(
+          fontSize: 16,
+          color: Colors.blueGrey[900],
+          fontWeight: FontWeight.w500,
+        ),
       ),
     );
   }

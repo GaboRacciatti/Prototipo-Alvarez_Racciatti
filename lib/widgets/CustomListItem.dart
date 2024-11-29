@@ -21,25 +21,32 @@ class CustomListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
       elevation: 4,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(12), 
       ),
       color: backgroundColor,
       child: ListTile(
-        leading: leading,
+        contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16), 
+        leading: CircleAvatar(
+          backgroundColor: Colors.grey[200], 
+          child: leading,
+        ),
         title: Text(
           title,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 16.0,
-            color: Colors.black
+            fontSize: 18.0, 
+            color: Colors.black87, 
           ),
         ),
         subtitle: Text(
           subtitle,
-          style: TextStyle(color: const Color.fromARGB(255, 26, 25, 25)),
+          style: TextStyle(
+            color: Colors.grey[800], 
+            fontSize: 14.0, 
+          ),
         ),
         trailing: trailing,
         onTap: onTap,
