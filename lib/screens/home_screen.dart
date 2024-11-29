@@ -51,10 +51,10 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: Icon(Icons.assignment_turned_in), // Ícono representativo
-              title: Text('Trabajos Realizados'), // Nueva opción en el menú
+              leading: Icon(Icons.assignment_turned_in), 
+              title: Text('Trabajos Realizados'),
               onTap: () {
-                Navigator.pushNamed(context, '/trabajos_realizados'); // Navega a la pantalla de Trabajos Realizados
+                Navigator.pushNamed(context, '/trabajos_realizados'); 
               },
             ),
           ],
