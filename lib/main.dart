@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert'; // Para manejar JSON
 import 'screens/screens.dart';
 import 'theme/app_theme.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'helpers/preferences.dart';
+import 'service/ServicePerfil.dart'; 
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load();
+  await Preferences.initShared();
   runApp(MyApp());
 }
 
@@ -14,48 +18,27 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool isDarkTheme = false; // Control del tema actual
-  Map<String, dynamic> registro = {}; // Perfil del usuario
+  bool isDarkTheme = Preferences.darkmode;
+  Map<String, dynamic> registro = {};
 
   @override
   void initState() {
     super.initState();
-    cargarPerfil(); // Cargar perfil al iniciar la app
+    inicializarPerfil();
   }
 
-  void toggleTheme() {
-    setState(() {
-      isDarkTheme = !isDarkTheme;
-    });
-  }
-
-  // Guardar el perfil en Shared Preferences
-  Future<void> guardarPerfil(Map<String, dynamic> perfil) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('perfil', jsonEncode(perfil)); // Convertir a JSON
+  void inicializarPerfil() async {
+    final perfil = await ServicePerfil.cargarPerfil();
     setState(() {
       registro = perfil;
     });
   }
 
-  // Cargar el perfil desde Shared Preferences
-  Future<void> cargarPerfil() async {
-    final prefs = await SharedPreferences.getInstance();
-    final perfilJson = prefs.getString('perfil');
-    if (perfilJson != null) {
-      setState(() {
-        registro = jsonDecode(perfilJson); // Convertir de JSON a Map
-      });
-    } else {
-      // Perfil predeterminado si no existe en Shared Preferences
-      registro = {
-        'nombre': 'Juan Pérez',
-        'email': 'juan.perez@empresa.com',
-        'ubicacion': 'Buenos Aires, Argentina',
-        'avatar': 'https://ui-avatars.com/api/?name=Juan+Pérez&background=random',
-      };
-      guardarPerfil(registro); // Guardar el perfil inicial
-    }
+  void toggleTheme() {
+    setState(() {
+      isDarkTheme = !isDarkTheme;
+      Preferences.darkmode = isDarkTheme;
+    });
   }
 
   @override
