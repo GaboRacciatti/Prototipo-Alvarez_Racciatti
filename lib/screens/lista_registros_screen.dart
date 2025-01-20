@@ -19,18 +19,19 @@ class _ListaRegistroScreenState extends State<ListaRegistroScreen> {
     obtenerRegistros();
   }
 
-  Future<void> obtenerRegistros() async {
-    try {
-      final apiUrl = dotenv.env['URL_API_GABO']; 
-      if (apiUrl == null) {
-        throw Exception('La url no se encontró');
-      }
+Future<void> obtenerRegistros() async {
+  try {
+    final apiUrl = dotenv.env['URL_API_GABO'];
+    if (apiUrl == null) {
+      throw Exception('La url no se encontró');
+    }
 
-      final response = await http.get(Uri.parse(apiUrl));
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
+    final response = await http.get(Uri.parse(apiUrl));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      if (data['data'] != null) {
         setState(() {
-          registros = data.map((registro) {
+          registros = (data['data'] as List).map((registro) {
             return {
               'id': registro['id'],
               'nombre': registro['nombre'],
@@ -41,12 +42,16 @@ class _ListaRegistroScreenState extends State<ListaRegistroScreen> {
           }).toList();
         });
       } else {
-        print('Error en la API: ${response.statusCode}');
+        print('Error: El campo "data" no está presente en la respuesta.');
       }
-    } catch (e) {
-      print('Error al obtener los datos: $e');
+    } else {
+      print('Error en la API: ${response.statusCode}');
     }
+  } catch (e) {
+    print('Error al obtener los datos: $e');
   }
+}
+
 
   String generarAvatar(String nombre) {
     return 'https://ui-avatars.com/api/?name=${Uri.encodeComponent(nombre)}&background=random';

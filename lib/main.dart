@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
               registro: registro,
             ),
         '/listado': (context) => ListaRegistroScreen(),
-        '/trabajos_realizados': (context) => ListaTrabajosScreen(),
+        '/areas': (context) => ListaAreasScreen(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/detalle') {
