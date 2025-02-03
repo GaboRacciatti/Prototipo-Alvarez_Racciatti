@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
 
-class DetalleTrabajoScreen extends StatefulWidget {
-  final Map<String, dynamic> trabajo;
+class DetalleAreaScreen extends StatefulWidget {
+  final Map<String, dynamic> area;
 
-  const DetalleTrabajoScreen({Key? key, required this.trabajo}) : super(key: key);
+  const DetalleAreaScreen({Key? key, required this.area}) : super(key: key);
 
   @override
-  _DetalleTrabajoScreenState createState() => _DetalleTrabajoScreenState();
+  _DetalleAreaScreenState createState() => _DetalleAreaScreenState();
 }
 
-class _DetalleTrabajoScreenState extends State<DetalleTrabajoScreen> {
+class _DetalleAreaScreenState extends State<DetalleAreaScreen> {
   final TextEditingController _comentarioController = TextEditingController();
-  bool _trabajoCompletado = false;
+  bool _areaActiva = false;
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final textColor = isDarkMode ? Colors.white : Colors.black;
+    final backgroundColor = isDarkMode ? Colors.grey[800]! : Colors.white;
+    final boxBorderColor = isDarkMode ? Colors.white70 : Colors.blueGrey[300]!;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Detalle del Trabajo',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          'Detalle del Área',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: textColor),
         ),
         backgroundColor: Colors.blueGrey,
         elevation: 4,
@@ -30,33 +35,32 @@ class _DetalleTrabajoScreenState extends State<DetalleTrabajoScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              
-              _buildSectionTitle('Descripción del Trabajo'),
-              _buildInfoBox(widget.trabajo['descripcion_trabajo'] ?? 'No especificado'),
+              _buildSectionTitle('Nombre del Área', textColor),
+              _buildInfoBox(widget.area['name'] ?? 'No especificado', backgroundColor, boxBorderColor, textColor),
 
               SizedBox(height: 16),
-              _buildSectionTitle('Empleado a cargo'),
-              _buildInfoBox(widget.trabajo['nombre_empleado'] ?? 'No especificado'),
+              _buildSectionTitle('Cantidad de Empleados', textColor),
+              _buildInfoBox(widget.area['cantEmpleadosArea'].toString(), backgroundColor, boxBorderColor, textColor),
 
               SizedBox(height: 16),
-              _buildSectionTitle('Puesto'),
-              _buildInfoBox(widget.trabajo['puesto'] ?? 'No especificado'),
+              _buildSectionTitle('ID del Área', textColor),
+              _buildInfoBox(widget.area['id'], backgroundColor, boxBorderColor, textColor),
 
               SizedBox(height: 16),
-              _buildSectionTitle('Comentario'),
+              _buildSectionTitle('Comentario', textColor),
               TextFormField(
                 controller: _comentarioController,
                 maxLines: 3,
+                style: TextStyle(color: textColor),
                 decoration: InputDecoration(
-                  hintText: 'Escribe un comentario sobre este trabajo...',
-                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: 14),
+                  hintText: 'Escribe un comentario sobre esta área...',
+                  hintStyle: TextStyle(color: textColor.withOpacity(0.7)),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  fillColor: Colors.grey[100], 
+                  fillColor: backgroundColor,
                   filled: true,
                 ),
-                style: TextStyle(fontSize: 16, color: Colors.blueGrey[900]),
               ),
 
               SizedBox(height: 16),
@@ -64,23 +68,17 @@ class _DetalleTrabajoScreenState extends State<DetalleTrabajoScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '¿Trabajo completado?',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blueGrey[800],
-                    ),
+                    '¿Área activa?',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: textColor),
                   ),
                   Switch(
-                    value: _trabajoCompletado,
-                    onChanged: (bool value) {
+                    value: _areaActiva,
+                    onChanged: (value) {
                       setState(() {
-                        _trabajoCompletado = value;
+                        _areaActiva = value;
                       });
                     },
                     activeColor: Colors.green,
-                    inactiveThumbColor: Colors.grey[400],
-                    inactiveTrackColor: Colors.grey[300],
                   ),
                 ],
               ),
@@ -89,19 +87,11 @@ class _DetalleTrabajoScreenState extends State<DetalleTrabajoScreen> {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    
                     print('Comentario: ${_comentarioController.text}');
-                    print('Trabajo completado: $_trabajoCompletado');
-
-                   
+                    print('Área activa: $_areaActiva');
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(
-                          'Información del trabajo guardada',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        duration: Duration(seconds: 2),
-                        behavior: SnackBarBehavior.floating,
+                        content: Text('Información del área guardada'),
                         backgroundColor: Colors.green,
                       ),
                     );
@@ -111,7 +101,6 @@ class _DetalleTrabajoScreenState extends State<DetalleTrabajoScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   ),
                   child: Text(
                     'Guardar Información',
@@ -126,32 +115,30 @@ class _DetalleTrabajoScreenState extends State<DetalleTrabajoScreen> {
     );
   }
 
-
-  Widget _buildSectionTitle(String title) {
+  Widget _buildSectionTitle(String title, Color textColor) {
     return Text(
       title,
       style: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,
-        color: Colors.blueGrey[800],
+        color: textColor,
       ),
     );
   }
 
-  
-  Widget _buildInfoBox(String text) {
+  Widget _buildInfoBox(String text, Color backgroundColor, Color borderColor, Color textColor) {
     return Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: backgroundColor,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.blueGrey[300]!),
+        border: Border.all(color: borderColor),
         boxShadow: [
           BoxShadow(
             color: Colors.blueGrey.withOpacity(0.2),
             spreadRadius: 2,
             blurRadius: 4,
-            offset: Offset(0, 2), 
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -159,8 +146,8 @@ class _DetalleTrabajoScreenState extends State<DetalleTrabajoScreen> {
         text,
         style: TextStyle(
           fontSize: 16,
-          color: Colors.blueGrey[900],
           fontWeight: FontWeight.w500,
+          color: textColor,
         ),
       ),
     );

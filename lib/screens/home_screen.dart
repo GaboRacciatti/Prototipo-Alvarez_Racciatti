@@ -52,9 +52,9 @@ class HomeScreen extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.assignment_turned_in), 
-              title: Text('Trabajos Realizados'),
+              title: Text('Lista de Areas (Alvarez)'),
               onTap: () {
-                Navigator.pushNamed(context, '/trabajos_realizados'); 
+                Navigator.pushNamed(context, '/areas'); 
               },
             ),
           ],
