@@ -52,7 +52,7 @@ class HomeScreen extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.assignment_turned_in), 
-              title: Text('Lista de Areas (Alvarez)'),
+              title: Text('Lista de Áreas (Alvarez)'),
               onTap: () {
                 Navigator.pushNamed(context, '/areas'); 
               },
@@ -92,7 +92,7 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
                 'Bienvenido al sistema de gestión de nuestra empresa. '
-                'Aquí podrás consultar el listado de empleados, trabajos realizados y más.',
+                'Aquí podrás consultar el listado de empleados, las áreas de nuestra empresa y más.',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16),
               ),
