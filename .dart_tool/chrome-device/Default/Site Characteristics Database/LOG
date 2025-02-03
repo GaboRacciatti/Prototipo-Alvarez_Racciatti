@@ -1,20 +1,10 @@
-2025/01/15-11:00:37.355 37b4 Reusing MANIFEST C:\Users\Usuario\AppData\Local\Temp\flutter_tools.22db3040\flutter_tools_chrome_device.15660c03\Default\Site Characteristics Database/MANIFEST-000001
-2025/01/15-11:00:37.367 37b4 Recovering log #3
-2025/01/15-11:00:37.367 37b4 Level-0 table #10: started
-2025/01/15-11:00:37.372 37b4 Level-0 table #10: 475 bytes OK
-2025/01/15-11:00:37.372 37b4 Recovering log #6
-2025/01/15-11:00:37.372 37b4 Level-0 table #11: started
-2025/01/15-11:00:37.427 37b4 Level-0 table #11: 165 bytes OK
-2025/01/15-11:00:37.427 37b4 Recovering log #10
-2025/01/15-11:00:37.427 37b4 Reusing old log C:\Users\Usuario\AppData\Local\Temp\flutter_tools.22db3040\flutter_tools_chrome_device.15660c03\Default\Site Characteristics Database/000010.log 
-2025/01/15-11:00:37.441 37b4 Delete type=0 #3
-2025/01/15-11:00:37.442 37b4 Delete type=0 #6
-2025/01/15-11:00:37.443 37b4 Compacting 5@0 + 0@1 files
-2025/01/15-11:00:37.446 37b4 Generated table #12@0: 2 keys, 194 bytes
-2025/01/15-11:00:37.446 37b4 Compacted 5@0 + 0@1 files => 194 bytes
-2025/01/15-11:00:37.448 37b4 compacted to: files[ 0 1 0 0 0 0 0 ]
-2025/01/15-11:00:37.449 37b4 Delete type=2 #4
-2025/01/15-11:00:37.449 37b4 Delete type=2 #7
-2025/01/15-11:00:37.449 37b4 Delete type=2 #8
-2025/01/15-11:00:37.449 37b4 Delete type=2 #10
-2025/01/15-11:00:37.449 37b4 Delete type=2 #11
+2025/02/03-11:31:27.093 23d8 Reusing MANIFEST C:\Users\Usuario\AppData\Local\Temp\flutter_tools.12c5fe0f\flutter_tools_chrome_device.f0f1c259\Default\Site Characteristics Database/MANIFEST-000001
+2025/02/03-11:31:27.095 23d8 Recovering log #17
+2025/02/03-11:31:27.096 23d8 Reusing old log C:\Users\Usuario\AppData\Local\Temp\flutter_tools.12c5fe0f\flutter_tools_chrome_device.f0f1c259\Default\Site Characteristics Database/000017.log 
+2025/02/03-11:31:27.096 23d8 Delete type=0 #3
+2025/02/03-11:31:27.096 23d8 Delete type=2 #4
+2025/02/03-11:31:27.096 23d8 Delete type=0 #6
+2025/02/03-11:31:27.096 23d8 Delete type=2 #7
+2025/02/03-11:31:27.096 23d8 Delete type=2 #8
+2025/02/03-11:31:27.097 23d8 Delete type=0 #10
+2025/02/03-11:31:27.097 23d8 Delete type=2 #12

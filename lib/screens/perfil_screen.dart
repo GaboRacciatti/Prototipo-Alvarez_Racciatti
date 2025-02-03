@@ -1,88 +1,104 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../service/api_service.dart';
+import '../models/perfil.dart';
+import '../providers/themeProviders.dart';
 
-class PerfilScreen extends StatelessWidget {
-  final VoidCallback toggleTheme;
-  final bool isDarkTheme; 
-  final Map<String, dynamic> registro; 
+class PerfilScreen extends StatefulWidget {
+  @override
+  _PerfilScreenState createState() => _PerfilScreenState();
+}
 
-  PerfilScreen({
-    required this.toggleTheme,
-    required this.isDarkTheme,
-    required this.registro,
-  });
+class _PerfilScreenState extends State<PerfilScreen> {
+  late Future<Perfil> _perfil;
+
+  @override
+  void initState() {
+    super.initState();
+    _perfil = ApiService.obtenerPerfil();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Perfil'),
+        title: Text("Perfil"),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: CircleAvatar(
-                radius: 60,
-                backgroundImage: NetworkImage(registro['avatar']),
-              ),
-            ),
-            SizedBox(height: 20),
+      body: FutureBuilder<Perfil>(
+        future: _perfil,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text("Error al cargar el perfil"));
+          } else if (!snapshot.hasData) {
+            return Center(child: Text("No se encontró el perfil"));
+          }
 
-            Text(
-              '¡Hola de nuevo ${registro['nombre']} ${registro['apellido']}!',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
+          final perfil = snapshot.data!;
 
-            Text(
-              'Email: ${registro['email'] ?? 'No disponible'}',
-              style: TextStyle(fontSize: 18, color: Colors.grey[600]),
-            ),
-            SizedBox(height: 10),
-
-            Text(
-              'Ubicación: ${registro['ubicacion'] ?? 'No disponible'}',
-              style: TextStyle(fontSize: 18, color: Colors.grey[600]),
-            ),
-            SizedBox(height: 20),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          return Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Tema Oscuro', style: TextStyle(fontSize: 18)),
-                Switch(
-                  value: isDarkTheme,
-                  onChanged: (value) {
-                    toggleTheme();
-                  },
+                Center(
+                  child: CircleAvatar(
+                    radius: 60,
+                    backgroundImage: NetworkImage(perfil.avatar),
+                  ),
                 ),
+                SizedBox(height: 20),
+
+                Text(
+                  '¡Hola de nuevo ${perfil.nombre} ${perfil.apellido}!',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 10),
+
+                
+                Text(
+                  'Email: ${perfil.email}',
+                  style: TextStyle(fontSize: 18, color: Colors.grey[600]),
+                ),
+                SizedBox(height: 10),
+
+                Text(
+                  'Ubicación: ${perfil.ubicacion}', 
+                  style: TextStyle(fontSize: 18, color: Colors.grey[600]),
+                ),
+                SizedBox(height: 20),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Tema Oscuro', style: TextStyle(fontSize: 18)),
+                    Switch(
+                      value: themeProvider.isDarkTheme,
+                      onChanged: (value) {
+                        themeProvider.toggleTheme();
+                      },
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+
+                ElevatedButton.icon(
+                  onPressed: () {
+                    setState(() {
+                      _perfil = ApiService.obtenerPerfil();
+                    });
+                  },
+                  icon: Icon(Icons.refresh),
+                  label: Text('Actualizar Perfil'),
+                ),
+                SizedBox(height: 20),
               ],
             ),
-            SizedBox(height: 20),
-
-            ElevatedButton.icon(
-              onPressed: () async {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Perfil editado'),
-                    duration: Duration(seconds: 2),
-                    behavior: SnackBarBehavior.floating,
-                  ),
-                );
-              },
-              icon: Icon(Icons.edit),
-              label: Text('Editar Perfil'),
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Color(0xFF6200EA),
-                minimumSize: Size(double.infinity, 40),
-              ),
-            ),
-            SizedBox(height: 20),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
