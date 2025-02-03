@@ -1,61 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'screens/screens.dart';
 import 'theme/app_theme.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'helpers/preferences.dart';
-import 'service/ServicePerfil.dart'; 
+import 'providers/themeProviders.dart'; 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
   await Preferences.initShared();
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ThemeProvider(Preferences.darkmode),
+      child: MyApp(),
+    ),
+  );
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  bool isDarkTheme = Preferences.darkmode;
-  Map<String, dynamic> registro = {};
-
-  @override
-  void initState() {
-    super.initState();
-    inicializarPerfil();
-  }
-
-  void inicializarPerfil() async {
-    final perfil = await ServicePerfil.cargarPerfil();
-    setState(() {
-      registro = perfil;
-    });
-  }
-
-  void toggleTheme() {
-    setState(() {
-      isDarkTheme = !isDarkTheme;
-      Preferences.darkmode = isDarkTheme;
-    });
-  }
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: isDarkTheme ? ThemeMode.dark : ThemeMode.light,
+      themeMode: themeProvider.isDarkTheme ? ThemeMode.dark : ThemeMode.light,
       initialRoute: '/',
       routes: {
         '/': (context) => HomeScreen(),
-        '/perfil': (context) => PerfilScreen(
-              toggleTheme: toggleTheme,
-              isDarkTheme: isDarkTheme,
-              registro: registro,
-            ),
+        '/perfil': (context) => PerfilScreen(),
         '/listado': (context) => ListaRegistroScreen(),
         '/areas': (context) => ListaAreasScreen(),
       },
